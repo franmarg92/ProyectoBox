@@ -1,7 +1,7 @@
 const express = require ('express');
 const cors = require ('cors');
 const {dbConfig} = require('./config');
-const {roleRouter, userRouter, loginRouter, registerRouter} = require ('./routes');
+const {roleRouter, userRouter, loginRouter, registerRouter, activityRouter} = require ('./routes');
 
 
 
@@ -20,6 +20,7 @@ app.use('/api/role', roleRouter);
 app.use('/api/user', userRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/register', registerRouter);
+app.user('/api/activity', activityRouter)
 
 app.listen (PORT, async () => {
     await dbConfig.initDB();

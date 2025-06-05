@@ -8,7 +8,7 @@ const activity = dbConfig.sequelize.define('Activity', {
       primaryKey: true,
       autoIncrement: true
     },
-    nombre: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true
