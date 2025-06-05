@@ -1,0 +1,22 @@
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly; 
+  background-color: #222;
+  color: white;
+  padding: 20px;
+}
+
+.footer > div {
+  flex: 1; 
+  align-items: center;
+  text-align: center;
+  margin-top: 30px;
+  min-width: 200px; 
+}
+
+.footer > div:last-child {
+  flex-basis: 100%;
+  text-align: center; 
+ 
+}

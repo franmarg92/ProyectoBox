@@ -1,0 +1,13 @@
+ /*PALETA DE COLORES*/
+:root {
+  --color-violeta: #6564cc;
+  --color-azul: #00339e;
+  --color-azul-oscuro: #010163;
+  --color-naranja: #fc6a07;
+}
+ 
+ main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+  }
