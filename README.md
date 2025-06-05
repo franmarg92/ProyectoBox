@@ -12,11 +12,14 @@ Sistema web para la gestión de un gimnasio tipo Box de CrossFit. Incluye contro
 - MySQL
 - JWT para autenticación
 - Bcrypt para encriptación de contraseñas
+- Cors para el acceso a rutas
+- .Env para varialbes de entorno
+
 
 ### 💻 Frontend
 - Angular
 - Angular Router
-- Angular Material (o Tailwind si aplica)
+
 
 ---
 
@@ -36,9 +39,12 @@ proyecto-box/
 │
 └── frontend/
     └── src/app/
-        ├── components/
-        ├── pages/
+        ├── content/
+        ├── core/
+        ├── guards/
+        ├── models/
         ├── services/
+        ├── views/
         └── app.module.ts
 ```
 
@@ -51,8 +57,8 @@ proyecto-box/
 - Inscripción a clases según tipo y horario
 - Registro de asistencias por parte de profesores
 - Carga de aptos médicos (PDF o imagen)
-- Gestión de clases y horarios por el admin
-- Página pública con horarios, WOD y contacto
+- Gestión de clases, horarios y wod por el admin
+- Página pública con horarios y contacto
 
 ---
 
@@ -72,7 +78,7 @@ DB_HOST=localhost
 DB_NAME=proyectoBox
 DB_USER=root
 DB_PASSWORD=tu_clave
-JWT_SECRET=claveSuperSecreta
+JWT_SECRET=palabra
 ```
 
 3. Levantar el servidor:
@@ -111,13 +117,6 @@ ng serve
 
 ---
 
-## 📮 Contacto
-
-- 📧 contacto@boxcross.com
-- 📍 Adolfo Doering, Córdoba, Argentina
-- 🌐 [Ver mapa](https://goo.gl/maps/CVQ5B5XDLu42)
-
----
 
 ## 🏁 Autor
 
