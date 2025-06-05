@@ -1,3 +1,37 @@
-h1{
-    background-color: aquamarine;
+.home-container {
+    text-align: center;
+    padding: 20px;
+}
+
+/* 🎯 Hero Section */
+.hero {
+    background: url('../../../assets/banner.jpg') no-repeat center center/cover;
+    color: white;
+    padding: 80px 20px;
+}
+
+.cta-buttons button {
+    background-color: #ff4500;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+/* 🔥 Sección Sobre Nosotros */
+.about {
+    padding: 40px 20px;
+}
+
+/* 🏆 Clases y Horarios */
+.schedule {
+    background: #f4f4f4;
+    padding: 40px 20px;
+}
+
+/* 🤝 Testimonios */
+.testimonials {
+    padding: 40px 20px;
+    background: #ddd;
 }

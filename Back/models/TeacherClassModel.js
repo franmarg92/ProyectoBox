@@ -8,13 +8,21 @@ const teacherClass = dbConfig.sequelize.define('TeacherClass', {
       primaryKey: true,
       autoIncrement: true
     },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+   user_id: {  
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'Users',
+            key: 'user_id'
+        }
     },
-    class_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+    session_id: {  
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'Session',
+            key: 'session_id'
+        }
     }
   }, { timestamps: false });
   

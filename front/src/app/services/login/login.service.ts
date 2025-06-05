@@ -7,12 +7,14 @@ import { isPlatformBrowser } from '@angular/common';
 import { loginResponse } from '../../models/loginRespone';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   private apiUrl = 'http://localhost:3000/api/login';
+  private jwtHelper = new JwtHelperService();
 
 constructor(@Inject(PLATFORM_ID) private platformId: any, private http: HttpClient) {}
 
@@ -40,6 +42,16 @@ logout(): void {
   localStorage.removeItem('user');
   localStorage.removeItem('token');
 }
+
+isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    return token ? !this.jwtHelper.isTokenExpired(token) : false;
+  }
+
+  getUserRole(): string | null {
+    const token = localStorage.getItem('token');
+    return token ? this.jwtHelper.decodeToken(token).role : null;
+  }
 
 }
 

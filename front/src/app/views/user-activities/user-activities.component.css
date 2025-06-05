@@ -1,0 +1,55 @@
+
+
+.container {
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
+}
+
+label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.form-select {
+  width: 100%;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.btn-primary {
+  width: 100%;
+}
+
+/* Tarjeta de usuario */
+.card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para las pestañas */
+.nav-tabs .nav-link {
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Estilos de clases */
+.card-body h5 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.text-danger {
+  font-weight: bold;
+  color: red;
+}
+
+button.btn-primary {
+  width: 100%;
+}
