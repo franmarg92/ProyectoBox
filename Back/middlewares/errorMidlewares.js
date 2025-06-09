@@ -1,4 +1,5 @@
-import { validationResult } from 'express-validator'
+
+const {validationResult } = require ('express-validator')
 
 const handleInputErrors = (req, res, next) =>{
     const errors = validationResult(req)
@@ -10,4 +11,4 @@ const handleInputErrors = (req, res, next) =>{
 
 }
 
-export {handleInputErrors}
+module.exports = {handleInputErrors}

@@ -1,5 +1,5 @@
 const errorMiddleware  = require('./errorMidlewares')
-const authMiddleware = require('./authMidlewares')
+const requireRole = require('./requireRole')
+const authMiddleware = require('./authMiddleware')
 
-
-module.exports = {errorMiddleware, authMiddleware}
+module.exports = {authMiddleware ,errorMiddleware, requireRole}

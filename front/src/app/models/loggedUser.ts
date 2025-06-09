@@ -1,4 +1,5 @@
 export interface loggedUser {
+  user_id : number;
   name: string;
   lastName: string;
   dni: number;

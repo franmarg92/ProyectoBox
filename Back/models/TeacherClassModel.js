@@ -1,5 +1,7 @@
 const {DataTypes} = require('sequelize');
 const {dbConfig} = require('../config');
+const UserModel = require('./UserModel')
+const SessionModel = require ('./SessionModel.js')
 
 
 const teacherClass = dbConfig.sequelize.define('TeacherClass', {
@@ -12,16 +14,16 @@ const teacherClass = dbConfig.sequelize.define('TeacherClass', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Users',
+            model: UserModel,
             key: 'user_id'
         }
     },
-    session_id: {  
+    class_id: {  
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Session',
-            key: 'session_id'
+            model: SessionModel,
+            key: 'class_id'
         }
     }
   }, { timestamps: false });

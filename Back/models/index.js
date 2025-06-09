@@ -1,12 +1,13 @@
 const UserModel = require('./UserModel');
 const RoleModel = require('./RoleModel');
-const EnrollmentModel = require('./EnrollmentModel');
-const MedicalFitModel = require('./MedicalFitModel');
-const TeacherClassModel = require('./TeacherClassModel');
 const ActivityModel = require('./ActivityModel');
 const HoursModel = require('./HoursModel');
 const DaysModel = require('./DaysModel');
 const SessionModel = require('./SessionModel'); 
+const EnrollmentModel = require('./EnrollmentModel');
+const TeacherClassModel = require('./TeacherClassModel');
+const PaidModel = require('./PaidsModel');
+const MedicalFitModel = require('./MedicalFitModel');
 
 // ==========================
 // 📌 Relaciones de Roles
@@ -14,59 +15,54 @@ const SessionModel = require('./SessionModel');
 RoleModel.hasMany(UserModel, { foreignKey: 'role_id' });
 UserModel.belongsTo(RoleModel, { foreignKey: 'role_id' });
 
-
-
 // ==========================
-// 📌 Relaciones de User y Enrollment
+// 📌 Relaciones con UserModel
 // ==========================
+UserModel.hasOne(PaidModel, { foreignKey: 'user_id' });
+PaidModel.belongsTo(UserModel, { foreignKey: 'user_id' });
+
 UserModel.hasMany(EnrollmentModel, { foreignKey: 'user_id' });
 EnrollmentModel.belongsTo(UserModel, { foreignKey: 'user_id' });
 
-// ==========================
-// 📌 Relaciones de Clase y Enrollment
-// ==========================
-SessionModel.hasMany(EnrollmentModel, { foreignKey: 'class_id' });
-EnrollmentModel.belongsTo(SessionModel, { foreignKey: 'class_id' });
-
-
-
-// ==========================
-// 📌 Relaciones de ProfesorClase
-// ==========================
 UserModel.hasMany(TeacherClassModel, { foreignKey: 'user_id' });
 TeacherClassModel.belongsTo(UserModel, { foreignKey: 'user_id' });
 
-SessionModel.hasMany(TeacherClassModel, { foreignKey: 'class_id' });
-TeacherClassModel.belongsTo(SessionModel, { foreignKey: 'class_id' });
-
-// ==========================
-// 📌 Relaciones de AptoMedico
-// ==========================
 UserModel.hasMany(MedicalFitModel, { foreignKey: 'user_id' });
 MedicalFitModel.belongsTo(UserModel, { foreignKey: 'user_id' });
 
 // ==========================
-// 📌 Relaciones de Sesiones con Días y Horarios
+// 📌 Relaciones de Sesiones con Actividades, Días y Horas
 // ==========================
+ActivityModel.hasMany(SessionModel, { foreignKey: 'id_activity' });
+SessionModel.belongsTo(ActivityModel, { foreignKey: 'id_activity' });
+
 DaysModel.hasMany(SessionModel, { foreignKey: 'id_day' });
 SessionModel.belongsTo(DaysModel, { foreignKey: 'id_day' });
 
 HoursModel.hasMany(SessionModel, { foreignKey: 'id_hour' });
 SessionModel.belongsTo(HoursModel, { foreignKey: 'id_hour' });
 
-ActivityModel.hasMany(SessionModel, { foreignKey: 'id_class_type' });
-SessionModel.belongsTo(ActivityModel, { foreignKey: 'id_class_type' });
+// ==========================
+// 📌 Relaciones de Enrollment con Clases
+// ==========================
+SessionModel.hasMany(EnrollmentModel, { foreignKey: 'class_id' });
+EnrollmentModel.belongsTo(SessionModel, { foreignKey: 'class_id' });
 
-
+// ==========================
+// 📌 Relaciones de Profesor con Clases
+// ==========================
+SessionModel.hasMany(TeacherClassModel, { foreignKey: 'class_id' });
+TeacherClassModel.belongsTo(SessionModel, { foreignKey: 'class_id' });
 
 module.exports = {
   UserModel, 
   RoleModel,
-  EnrollmentModel, 
-  MedicalFitModel, 
-  TeacherClassModel, 
   ActivityModel,
   HoursModel,
   DaysModel,
-  SessionModel
+  SessionModel,
+  EnrollmentModel, 
+  TeacherClassModel, 
+  PaidModel, 
+  MedicalFitModel
 };

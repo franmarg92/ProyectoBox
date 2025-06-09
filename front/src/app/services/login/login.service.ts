@@ -1,9 +1,8 @@
 import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { Auth } from '../../models/auth';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs';
-import { isPlatformBrowser } from '@angular/common';
 import { loginResponse } from '../../models/loginRespone';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';

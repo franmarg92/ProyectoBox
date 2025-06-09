@@ -27,9 +27,10 @@ const loginUser = async (email, password) => {
     }
 
     const tokenPayload = {
+      user_id: user.user_id,
       name: user.name,
       email: user.email,
-      role: user.Role.name,
+      role: user.Role.name.toLowerCase()
     };
 
     const token = jwt.sign(tokenPayload, JWT_SECRET, { expiresIn: "2h" });

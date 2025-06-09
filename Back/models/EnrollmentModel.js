@@ -1,5 +1,7 @@
 const {DataTypes} = require('sequelize');
 const {dbConfig} = require('../config');
+const UserModel = require('./UserModel')
+const SessionModel = require ('./SessionModel.js')
 
 
 const Enrollment = dbConfig.sequelize.define('Enrollment', {
@@ -12,26 +14,26 @@ const Enrollment = dbConfig.sequelize.define('Enrollment', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Users',
+            model: UserModel,
             key: 'user_id'
         }
     },
-    session_id: {  
+    class_id: {  
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Session',
-            key: 'session_id'
+            model: SessionModel,
+            key: 'class_id'
         }
     },
-    attended: {  // Nuevo campo para registrar asistencia
+    attended: {  
         type: DataTypes.BOOLEAN,
-        defaultValue: false  // Se marca como `false` por defecto hasta que el usuario asista
+        defaultValue: false  
     },
-       enrollment_date: {  // Nuevo campo para registrar la fecha de inscripción
-        type: DataTypes.DATEONLY,  // Solo almacena fecha sin hora
+       enrollment_date: {  
+        type: DataTypes.DATEONLY,  
         allowNull: false,
-        defaultValue: DataTypes.NOW  // Guarda la fecha de inscripción automáticamente
+        defaultValue: DataTypes.NOW  
     }
   }, { timestamps: false });
   

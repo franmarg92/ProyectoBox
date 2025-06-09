@@ -12,6 +12,15 @@ const createActivity = async (name) => {
     }
 }
 
+const getAllActivities = async () => {
+    try {
+        const activities = await ActivityModel.findAll({include:{all:true}})
+        return activities
+    } catch (error) {
+        throw error
+    }
+}
 
 
-module.exports = {createActivity}
+
+module.exports = {createActivity, getAllActivities}

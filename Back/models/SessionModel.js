@@ -1,49 +1,52 @@
-const {DataTypes} = require('sequelize');
-const {dbConfig} = require('../config');
+const { DataTypes } = require('sequelize');
+const { dbConfig } = require('../config');
+const ActivityModel = require('./ActivityModel');  
+const DaysModel = require('./DaysModel');
+const HoursModel = require('./HoursModel');
 
-
-const session = dbConfig.sequelize.define('Session', {
+const Session = dbConfig.sequelize.define('Session', {
     class_id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
     },
-    id_class_type: {  // Relación con la tabla de tipos de clase
+    id_activity: { 
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Activity',
+            model: ActivityModel, 
             key: 'id_activity'
         }
     },
-    id_day: {  // Relación con la tabla Days
+    id_day: {  
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Days',
+            model: DaysModel,
             key: 'days_id'
         }
     },
-    id_hour: {  // Relación con la tabla Hours
+    id_hour: {  
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Hours',
+            model: HoursModel,
             key: 'hours_id'
         }
     },
-      available_spots: {  // Cupos restantes en la clase
+    available_spots: {  
         type: DataTypes.INTEGER,
         allowNull: false
     },
-      max_spots: {  // Cupos maximo en la clase
+    max_spots: {  
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    is_available: {  // Estado de la clase (activo/inactivo)
+    is_available: {  
         type: DataTypes.BOOLEAN,
         defaultValue: true
     }
-  }, { timestamps: false });
-  
-  module.exports = session;
+}, { timestamps: false });
+
+// Exportar el modelo correctamente
+module.exports = Session;

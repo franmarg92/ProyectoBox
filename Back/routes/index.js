@@ -3,5 +3,10 @@ const userRouter = require('./UserRoutes')
 const loginRouter = require('./LoginRoutes')
 const registerRouter = require ('./RegisterRoutes')
 const activityRouter = require ('./ActivityTypeRoutes')
+const enrollRouter = require ('./EnrollmentRoutes')
+const hoursRouter = require('./HoursRoutes')
+const daysRouter = require('./DaysRoutes')
+const classRouter = require('./ClassRoutes')
+const paidsRouter = require ('./PaidsRoutes')
 
-module.exports = {roleRouter, userRouter, loginRouter, registerRouter, activityRouter }
+module.exports = {paidsRouter ,classRouter ,daysRouter ,hoursRouter ,roleRouter, userRouter, loginRouter, registerRouter, activityRouter, enrollRouter }

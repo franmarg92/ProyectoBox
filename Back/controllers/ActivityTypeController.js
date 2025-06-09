@@ -12,4 +12,14 @@ const createActivity = async (req, res, next) => {
     
 }
 
-module.exports = {createActivity}
+const getAllActivities =async (req, res, next) => {
+    try {
+        const activities = await ActivityTypeService.getAllActivities();
+        res.status(200).json(activities)
+    } catch (error) {
+        next(error)
+    }
+    
+}
+
+module.exports = {createActivity, getAllActivities}
