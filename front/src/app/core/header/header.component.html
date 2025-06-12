@@ -2,9 +2,19 @@
   <a class="navbar-brand ms-3" href="/">Mi App</a> 
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav ms-auto">
-      <li class="nav-item"><a class="nav-link me-3" href="/login">Login</a></li>
-      <li class="nav-item"><a class="nav-link me-3" href="/register">Registrarse</a></li> 
+      <ng-container *ngIf="isAuthenticated; else guestMenu">
+        <li class="nav-item">
+          <span class="nav-link"> <strong>Hola, {{ user?.name }} {{user?.lastName}}</strong></span>
+        </li>
+        <li class="nav-item">
+          <button class="btn logout-btn" (click)="logout()">Logout</button>
+        </li>
+      </ng-container>
+      
+      <ng-template #guestMenu>
+        <li class="nav-item"><a class="nav-link me-3" href="/login">Login</a></li>
+        <li class="nav-item"><a class="nav-link me-3" href="/register">Registrarse</a></li> 
+      </ng-template>
     </ul>
   </div>
 </nav>
-

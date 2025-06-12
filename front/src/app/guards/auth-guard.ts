@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate,ActivatedRouteSnapshot , Router } from '@angular/router';
 import { LoginService } from '../services/login/login.service';
 
 @Injectable({
@@ -8,11 +8,20 @@ import { LoginService } from '../services/login/login.service';
 export class AuthGuard implements CanActivate {
   constructor(private loginService: LoginService, private router: Router) {}
 
-  canActivate(): boolean {
-    if (this.loginService.isAuthenticated()) {
+  canActivate(route: ActivatedRouteSnapshot): boolean {
+    if (!this.loginService.isAuthenticated()) {
+      this.router.navigate(['']);
+      return false;
+    }
+
+    const userRole = this.loginService.getUserRole();
+    const requiredRole = route.data['role']; 
+
+    if (!requiredRole || requiredRole === userRole) {
       return true;
     }
 
+    console.warn("❌ Acceso denegado: Se requiere rol", requiredRole);
     this.router.navigate(['']);
     return false;
   }

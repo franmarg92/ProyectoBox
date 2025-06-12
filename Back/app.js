@@ -13,6 +13,8 @@ const {
   enrollRouter,
   hoursRouter,
   daysRouter,
+  wodRouter
+
 } = require("./routes");
 const corsConfig = require("./config/cors");
 const passport = require('passport')
@@ -37,6 +39,7 @@ app.use("/api/hours", hoursRouter);
 app.use("/api/days", daysRouter);
 app.use("/api/class", classRouter);
 app.use("/api/payment", paidsRouter);
+app.use("/api/wods", wodRouter)
 
 app.listen(PORT, async () => {
   await dbConfig.initDB();

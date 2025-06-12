@@ -1,0 +1,40 @@
+/*PALETA DE COLORES*/
+
+  .sidebar {
+    width: 250px;
+    background-color: #6564cc;
+    height: 100vh;
+    padding: 20px;
+    
+    
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin-bottom: 20px;
+    margin-top: 20px; 
+  }
+  
+  .sidebar ul li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    background-color:  #01016395; 
+    padding: 12px 16px; 
+    border-radius: 5px; 
+    display: block; 
+    transition: all .5s; 
+  }
+  
+  .sidebar ul li a:hover {
+    background-color: #FC6A07; 
+    color: #ffffff;
+    transform: scale(1.02);
+  }
+
+ 
+  

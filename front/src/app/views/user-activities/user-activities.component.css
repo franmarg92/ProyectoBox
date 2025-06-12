@@ -20,6 +20,9 @@ label {
 .btn-primary {
   width: 100%;
 }
+.wod-description {
+  white-space: pre-line; 
+}
 
 /* Tarjeta de usuario */
 .card {

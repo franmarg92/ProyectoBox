@@ -12,6 +12,10 @@ import { DaysService } from '../../services/days/days.service';
 import { days } from '../../models/days';
 import { SessionsService } from '../../services/sessions/sessions.service';
 import { Session } from '../../models/sessions';
+import { wods } from '../../models/wods';
+import { WodsService } from '../../services/wods/wods.service';
+import { PaidsService } from '../../services/paids/paids.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-activities',
@@ -28,13 +32,19 @@ export class UserActivitiesComponent {
   days: days[] = [];
   hours: hours[] = [];
   sessions: Session[] = [];
+  wod: wods [] = [];
+  isPaid :boolean = false;
+  expirationDate : Date | null = null;
 
   ngOnInit() {
     this.getLoggedUser();
+    this.loadWods();
     this.loadActivities();
     this.loadHours();
     this.loadDays();
     this.loadSessions();
+    this.loadUserPaymentStatus();
+    
   }
 
   constructor(
@@ -42,8 +52,23 @@ export class UserActivitiesComponent {
     private activityService: ActivityService,
     private hoursService: HoursService,
     private daysService: DaysService,
-    private sessionService: SessionsService
+    private sessionService: SessionsService,
+    private wodsService: WodsService,
+    private paidsService: PaidsService
   ) {}
+
+  loadUserPaymentStatus(): void {
+  this.paidsService.getStatus(this.loggedUser?.user_id?? 0).subscribe({
+    next: (payment) => {
+      this.expirationDate = payment.expiration_date;
+      this.isPaid = payment.is_paid;
+    },
+    error: () => {
+      this.expirationDate = null;
+      this.isPaid = false;
+    }
+  });
+}
 
   getLoggedUser() {
     const userData = localStorage.getItem('user');
@@ -53,6 +78,12 @@ export class UserActivitiesComponent {
         this.enrollments.user_id = this.loggedUser.user_id;
       }
     }
+  }
+
+loadWods() {
+    this.wodsService.getAllWods().subscribe((response: wods[]) => {
+      this.wod = response;
+    });
   }
 
   loadSessions() {
@@ -79,61 +110,88 @@ export class UserActivitiesComponent {
     });
   }
 
-  // Datos de WOD disponibles
-  wods = [
-    { nombre: 'Fran', fecha: '05/06/2025' },
-    { nombre: 'Murph', fecha: '07/06/2025' },
-  ];
+  
 
   // Variables para almacenar la selección del usuario
   claseSeleccionada = 0;
   diaSeleccionado = 0;
   horarioSeleccionado = 0;
 
+
+  getAvailableSpots(): number {
+  const selectedSession = this.sessions.find(
+    (session) =>
+      Number(session.id_activity) === Number(this.claseSeleccionada) &&
+      Number(session.id_day) === Number(this.diaSeleccionado) &&
+      Number(session.id_hour) === Number(this.horarioSeleccionado)
+  );
+  return selectedSession ? selectedSession.available_spots : 0; // 🔹 Si no hay sesión, devuelve 0
+}
+
   // Método para manejar la inscripción
-  inscribirse() {
-    // 🔹 Buscar la sesión que coincide con la selección del usuario
-    const selectedSession = this.sessions.find(
-      (session) =>
-        Number(session.id_activity) === Number(this.claseSeleccionada) &&
-        Number(session.id_day) === Number(this.diaSeleccionado) &&
-        Number(session.id_hour) === Number(this.horarioSeleccionado)
-    );
+inscribirse() {
+  // 🔹 Buscar la sesión que coincide con la selección del usuario
+  const selectedSession = this.sessions.find(
+    (session) =>
+      Number(session.id_activity) === Number(this.claseSeleccionada) &&
+      Number(session.id_day) === Number(this.diaSeleccionado) &&
+      Number(session.id_hour) === Number(this.horarioSeleccionado)
+  );
 
-    if (!selectedSession) {
-      alert('No se encontró una sesión con la combinación seleccionada.');
-      return;
-    }
-
-    if (selectedSession.available_spots <= 0) {
-      alert('Lo sentimos, no hay cupos disponibles para esta clase.');
-      return;
-    }
-
-    // 🔹 Datos de inscripción
-    const enrollmentData = {
-      user_id: this.loggedUser?.user_id ?? 0,
-      class_id: selectedSession.class_id,
-    };
-
-    console.log('📌 Datos enviados al backend:', enrollmentData);
-
-    // 🔹 Llamada al servicio para enviar la inscripción al backend
-    this.enrollmentsService.enroll(enrollmentData).subscribe(
-      (response) => {
-      
-        console.log('✅ Inscripción exitosa:', response);
-
-        // 🔹 Reducir cupos disponibles en el frontend sin recargar
-        selectedSession.available_spots--;
-      },
-
-      (error) => {
-        alert(`Error al inscribirse: ${error.error}`);
-        console.error('❌ Error en inscripción:', error);
-      }
-    );
+  if (!selectedSession) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Sesión no encontrada',
+      text: 'No se encontró una sesión con la combinación seleccionada.',
+    });
+    return;
   }
+
+  if (selectedSession.available_spots <= 0) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Cupos agotados',
+      text: 'Lo sentimos, no hay cupos disponibles para esta clase.',
+    });
+    return;
+  }
+
+  // 🔹 Datos de inscripción
+  const enrollmentData = {
+    user_id: this.loggedUser?.user_id ?? 0,
+    class_id: selectedSession.class_id,
+  };
+
+  // 🔹 Llamada al servicio para enviar la inscripción al backend
+  this.enrollmentsService.enroll(enrollmentData).subscribe(
+    (response) => {
+      console.log('✅ Inscripción exitosa:', response);
+
+      // 🔹 Reducir cupos disponibles en el frontend sin recargar
+      selectedSession.available_spots--;
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Inscripción exitosa',
+        text: 'Te has inscrito correctamente en la clase.',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+    },
+
+    (error) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en inscripción',
+        text: `Error al inscribirse: ${error.error}`,
+      });
+      console.error('❌ Error en inscripción:', error);
+    }
+  );
+}
 
   // Método para cambiar de pestaña
   cambiarTab(tab: string) {

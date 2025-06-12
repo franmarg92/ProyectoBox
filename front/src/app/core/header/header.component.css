@@ -1,0 +1,8 @@
+.logout-btn {
+    color :white
+}
+
+
+.logout-btn:hover {
+    color :rgb(166, 166, 166)
+}

@@ -5,7 +5,9 @@ export interface loggedUser {
   dni: number;
   date_of_birth: Date;
   email: string;
-  Roles: Role[];
+  role: string;
+  expirationDate?: Date | null; 
+  isPaid?: boolean; 
 }
 
 

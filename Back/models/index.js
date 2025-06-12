@@ -8,6 +8,7 @@ const EnrollmentModel = require('./EnrollmentModel');
 const TeacherClassModel = require('./TeacherClassModel');
 const PaidModel = require('./PaidsModel');
 const MedicalFitModel = require('./MedicalFitModel');
+const WodModel = require('./WodModel')
 
 // ==========================
 // 📌 Relaciones de Roles
@@ -64,5 +65,6 @@ module.exports = {
   EnrollmentModel, 
   TeacherClassModel, 
   PaidModel, 
-  MedicalFitModel
+  MedicalFitModel,
+  WodModel
 };

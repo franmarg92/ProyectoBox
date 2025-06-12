@@ -28,6 +28,7 @@ const loginUser = async (email, password) => {
 
     const tokenPayload = {
       user_id: user.user_id,
+      lastName: user.lastName,
       name: user.name,
       email: user.email,
       role: user.Role.name.toLowerCase()

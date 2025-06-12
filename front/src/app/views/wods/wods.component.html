@@ -1,0 +1,17 @@
+<div class="wod-container">
+  <!-- 🔹 Vista en tarjeta -->
+  <div *ngIf="!editing" class="wod-card">
+    <h2>WOD</h2>
+    <p>{{ wod.description }}</p>
+    <button class="btn btn-edit" (click)="editWod()">Editar</button>
+  </div>
+
+  <!-- 🔹 Formulario de edición -->
+  <form *ngIf="editing" (ngSubmit)="saveWod()">
+    <label for="description">Descripción del WOD</label>
+    <textarea id="description" [(ngModel)]="wod.description" name="description" required></textarea>
+
+    <button type="submit" class="btn">Actualizar</button>
+    <button type="button" class="btn btn-cancel" (click)="cancelEdit()">Cancelar</button>
+  </form>
+</div>

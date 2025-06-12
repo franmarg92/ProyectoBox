@@ -9,4 +9,8 @@ router.post(
  authMiddleware.userIsAuth, authMiddleware.userIsAdmin,
   paidsController.registerPayment
 );
+
+
+router.get('/status/:user_id', paidsController.getStatusPaid)
+router.get('/', paidsController.getAllPaids)
 module.exports = router

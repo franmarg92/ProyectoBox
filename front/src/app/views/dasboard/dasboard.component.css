@@ -1,0 +1,131 @@
+/* Contenedor base */
+.dashboard-container {
+
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar en escritorio */
+app-side-bar {
+  flex: 0 0 250px;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+  
+}
+
+/* Botón hamburguesa (oculto en escritorio) */
+.menu-toggle {
+  display: none;
+}
+
+/* Contenido principal */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Responsive para móviles y tablets */
+@media (max-width: 430px) {
+  .dashboard-container {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+  }
+
+
+  app-side-bar {
+    position: absolute;
+    z-index: 1000;
+    top: -100%;
+    transition: top 0.3s ease-in-out ;
+    overflow: hidden;
+  }
+
+  app-side-bar.active{
+    top: 0;
+  }
+
+.menu-toggle{
+  display: block;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #00339E ;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); 
+  z-index: 1000;
+}
+
+
+.menu-toggle:hover {
+    background: #002080; 
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5); 
+    transform: scale(1.1); 
+}
+
+
+.menu-toggle:active {
+    transform: scale(0.9);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+
+app-side-bar {
+  position: absolute;
+  z-index: 1000;
+  top: -100%;
+  transition: top 0.3s ease-in-out ;
+  overflow: hidden;
+}
+
+app-side-bar.active{
+  top: 0;
+}
+
+.menu-toggle{
+display: block;
+position: absolute;
+top: 10px;
+right: 20px;
+overflow: hidden;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+background: #00339E ;
+color: white;
+font-size: 20px;
+cursor: pointer;
+box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); 
+z-index: 1000;
+}
+
+
+.menu-toggle:hover {
+  background: #002080; 
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5); 
+  transform: scale(1.1); 
+}
+
+
+.menu-toggle:active {
+  transform: scale(0.9);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+}

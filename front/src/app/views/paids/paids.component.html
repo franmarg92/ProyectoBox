@@ -1,0 +1,77 @@
+<div class="container mt-5">
+  <div class="card shadow-lg">
+    <div class="card-header bg-primary text-white">
+      <h2 class="text-center mb-0">Registrar Pago</h2>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="registerPayment()">
+        <div class="row">
+          <!-- Usuario -->
+          <div class="col-md-6 mb-3">
+            <label for="user" class="form-label fw-bold">Usuario</label>
+            <select
+              id="user"
+              class="form-select"
+              [(ngModel)]="selectedUser"
+              name="user"
+            >
+              <option *ngFor="let user of users" [value]="user.user_id">
+                {{ user.name }} {{ user.lastName }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Monto del pago -->
+          <div class="col-md-6 mb-3">
+            <label for="amount" class="form-label fw-bold">Monto Pagado</label>
+            <input
+              type="number"
+              id="amount"
+              class="form-control"
+              [(ngModel)]="amountPaid"
+              name="amount"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Meses de pago -->
+          <div class="col-md-6 mb-3">
+            <label for="months" class="form-label fw-bold">Meses Pagados</label>
+            <input
+              type="number"
+              id="months"
+              class="form-control"
+              [(ngModel)]="monthsPaid"
+              name="months"
+              required
+              (input)="calculateExpiration()"
+            />
+          </div>
+
+          <!-- Fecha de expiración -->
+          <div class="col-md-6 mb-3">
+            <label for="expiration" class="form-label fw-bold"
+              >Fecha de Expiración</label
+            >
+            <input
+              type="text"
+              id="expiration"
+              class="form-control bg-light"
+              [value]="expirationDate | date : 'dd/MM/yyyy'"
+              readonly
+            />
+          </div>
+        </div>
+
+        <!-- Botón de registro -->
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-success btn-lg">
+            <i class="bi bi-cash-stack"></i> Registrar Pago
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

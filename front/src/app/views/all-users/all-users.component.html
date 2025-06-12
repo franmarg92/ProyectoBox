@@ -1,0 +1,61 @@
+<div class="users-container">
+  <h2>Lista de Usuarios</h2>
+  <input
+    type="text"
+    [(ngModel)]="searchText"
+    class="form-control mb-3"
+    placeholder="Buscar por nombre, apellido o DNI"
+  />
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">DNI</th>
+        <th scope="col">Fecha de Nacimiento</th>
+        <th scope="col">Email</th>
+        <th scope="col">Estado de Pago</th>
+        <th scope="col">Fecha de Expiración</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of getFilteredUsers()">
+        <td>{{ user.name }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.dni }}</td>
+        <td>{{ user.date_of_birth | date : "dd/MM/yyyy" }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <span
+            [ngClass]="{
+              'text-success': user.isPaid,
+              'text-danger': !user.isPaid
+            }"
+          >
+            {{ user.isPaid ? "Activo" : "Expirado" }}
+          </span>
+        </td>
+        <td>
+          <span *ngIf="user.expirationDate">{{
+            user.expirationDate | date : "dd/MM/yyyy"
+          }}</span>
+          <span *ngIf="!user.expirationDate" class="text-muted">Sin pagos</span>
+        </td>
+        <td>
+          <button
+            class="btn btn-success"
+            (click)="goToRegisterPayment(user.user_id)"
+          >
+            Registrar Pago
+          </button>
+        </td>
+        <td>
+  <button class="btn btn-warning" (click)="changeUserRole(user.user_id, 'Profesor')">
+    Convertir en Profesor
+  </button>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
