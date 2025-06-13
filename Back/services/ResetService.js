@@ -1,6 +1,6 @@
 const cron = require('node-cron');
 const { SessionModel } = require('../models');  
-
+const { Op } = require('sequelize');
 // 🔹 Ejecuta el reset de cupos a medianoche todos los días
 cron.schedule('0 0 * * *', async () => {
     try {
@@ -13,5 +13,8 @@ cron.schedule('0 0 * * *', async () => {
         console.error('❌ Error al resetear cupos:', error);
     }
 });
+
+
+
 
 module.exports = cron;

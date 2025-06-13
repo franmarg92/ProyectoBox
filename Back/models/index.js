@@ -8,7 +8,8 @@ const EnrollmentModel = require('./EnrollmentModel');
 const TeacherClassModel = require('./TeacherClassModel');
 const PaidModel = require('./PaidsModel');
 const MedicalFitModel = require('./MedicalFitModel');
-const WodModel = require('./WodModel')
+const WodModel = require('./WodModel');
+
 
 // ==========================
 // 📌 Relaciones de Roles
@@ -54,6 +55,8 @@ EnrollmentModel.belongsTo(SessionModel, { foreignKey: 'class_id' });
 // ==========================
 SessionModel.hasMany(TeacherClassModel, { foreignKey: 'class_id' });
 TeacherClassModel.belongsTo(SessionModel, { foreignKey: 'class_id' });
+
+
 
 module.exports = {
   UserModel, 

@@ -32,8 +32,7 @@ const Enrollment = dbConfig.sequelize.define('Enrollment', {
     },
        enrollment_date: {  
         type: DataTypes.DATEONLY,  
-        allowNull: false,
-        defaultValue: DataTypes.NOW  
+        allowNull: false
     }
   }, { timestamps: false });
   

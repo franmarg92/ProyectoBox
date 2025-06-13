@@ -6,13 +6,13 @@
     <div class="card-body">
       <form (ngSubmit)="registerPayment()">
         <div class="row">
-          <!-- Usuario -->
+            <!-- Usuario -->
           <div class="col-md-6 mb-3">
             <label for="user" class="form-label fw-bold">Usuario</label>
             <select
               id="user"
               class="form-select"
-              [(ngModel)]="selectedUser"
+              [(ngModel)]="selectedUserId"
               name="user"
             >
               <option *ngFor="let user of users" [value]="user.user_id">
@@ -20,6 +20,7 @@
               </option>
             </select>
           </div>
+
 
           <!-- Monto del pago -->
           <div class="col-md-6 mb-3">

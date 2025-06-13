@@ -8,7 +8,8 @@ const classController = require("./ClassController");
 const hoursController = require("./HoursController");
 const daysController = require("./DaysController");
 const paidsController = require("./PaidsController");
-const wodController = require('./WodController')
+const wodController = require('./WodController');
+
 
 module.exports = {
   paidsController,

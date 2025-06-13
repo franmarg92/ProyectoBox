@@ -32,9 +32,9 @@ export class UserActivitiesComponent {
   days: days[] = [];
   hours: hours[] = [];
   sessions: Session[] = [];
-  wod: wods [] = [];
-  isPaid :boolean = false;
-  expirationDate : Date | null = null;
+  wod: wods[] = [];
+  isPaid: boolean = false;
+  expirationDate: Date | null = null;
 
   ngOnInit() {
     this.getLoggedUser();
@@ -44,7 +44,6 @@ export class UserActivitiesComponent {
     this.loadDays();
     this.loadSessions();
     this.loadUserPaymentStatus();
-    
   }
 
   constructor(
@@ -58,17 +57,17 @@ export class UserActivitiesComponent {
   ) {}
 
   loadUserPaymentStatus(): void {
-  this.paidsService.getStatus(this.loggedUser?.user_id?? 0).subscribe({
-    next: (payment) => {
-      this.expirationDate = payment.expiration_date;
-      this.isPaid = payment.is_paid;
-    },
-    error: () => {
-      this.expirationDate = null;
-      this.isPaid = false;
-    }
-  });
-}
+    this.paidsService.getStatus(this.loggedUser?.user_id ?? 0).subscribe({
+      next: (payment) => {
+        this.expirationDate = payment.expiration_date;
+        this.isPaid = payment.is_paid;
+      },
+      error: () => {
+        this.expirationDate = null;
+        this.isPaid = false;
+      },
+    });
+  }
 
   getLoggedUser() {
     const userData = localStorage.getItem('user');
@@ -80,7 +79,7 @@ export class UserActivitiesComponent {
     }
   }
 
-loadWods() {
+  loadWods() {
     this.wodsService.getAllWods().subscribe((response: wods[]) => {
       this.wod = response;
     });
@@ -110,88 +109,101 @@ loadWods() {
     });
   }
 
-  
-
   // Variables para almacenar la selección del usuario
   claseSeleccionada = 0;
   diaSeleccionado = 0;
   horarioSeleccionado = 0;
 
-
   getAvailableSpots(): number {
-  const selectedSession = this.sessions.find(
-    (session) =>
-      Number(session.id_activity) === Number(this.claseSeleccionada) &&
-      Number(session.id_day) === Number(this.diaSeleccionado) &&
-      Number(session.id_hour) === Number(this.horarioSeleccionado)
-  );
-  return selectedSession ? selectedSession.available_spots : 0; // 🔹 Si no hay sesión, devuelve 0
-}
+    const selectedSession = this.sessions.find(
+      (session) =>
+        Number(session.id_activity) === Number(this.claseSeleccionada) &&
+        Number(session.id_day) === Number(this.diaSeleccionado) &&
+        Number(session.id_hour) === Number(this.horarioSeleccionado)
+    );
+    return selectedSession ? selectedSession.available_spots : 0; // 🔹 Si no hay sesión, devuelve 0
+  }
+
+  private getNextDateOfWeekday(targetDay: number): string {
+    const today = new Date();
+    const currentDay = today.getDay(); // 0 (Domingo) a 6 (Sábado)
+
+    let daysToAdd = targetDay - currentDay;
+    if (daysToAdd < 0) {
+      daysToAdd += 7;
+    }
+
+    const nextDate = new Date(today);
+    nextDate.setDate(today.getDate() + daysToAdd);
+
+    return nextDate.toISOString().split('T')[0]; // YYYY-MM-DD
+  }
 
   // Método para manejar la inscripción
-inscribirse() {
-  // 🔹 Buscar la sesión que coincide con la selección del usuario
-  const selectedSession = this.sessions.find(
-    (session) =>
-      Number(session.id_activity) === Number(this.claseSeleccionada) &&
-      Number(session.id_day) === Number(this.diaSeleccionado) &&
-      Number(session.id_hour) === Number(this.horarioSeleccionado)
-  );
+  inscribirse() {
+    // 🔹 Buscar la sesión que coincide con la selección del usuario
+    const selectedSession = this.sessions.find(
+      (session) =>
+        Number(session.id_activity) === Number(this.claseSeleccionada) &&
+        Number(session.id_day) === Number(this.diaSeleccionado) &&
+        Number(session.id_hour) === Number(this.horarioSeleccionado)
+    );
 
-  if (!selectedSession) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Sesión no encontrada',
-      text: 'No se encontró una sesión con la combinación seleccionada.',
-    });
-    return;
-  }
-
-  if (selectedSession.available_spots <= 0) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Cupos agotados',
-      text: 'Lo sentimos, no hay cupos disponibles para esta clase.',
-    });
-    return;
-  }
-
-  // 🔹 Datos de inscripción
-  const enrollmentData = {
-    user_id: this.loggedUser?.user_id ?? 0,
-    class_id: selectedSession.class_id,
-  };
-
-  // 🔹 Llamada al servicio para enviar la inscripción al backend
-  this.enrollmentsService.enroll(enrollmentData).subscribe(
-    (response) => {
-      console.log('✅ Inscripción exitosa:', response);
-
-      // 🔹 Reducir cupos disponibles en el frontend sin recargar
-      selectedSession.available_spots--;
-
+    if (!selectedSession) {
       Swal.fire({
-        icon: 'success',
-        title: 'Inscripción exitosa',
-        text: 'Te has inscrito correctamente en la clase.',
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
+        icon: 'warning',
+        title: 'Sesión no encontrada',
+        text: 'No se encontró una sesión con la combinación seleccionada.',
       });
-    },
+      return;
+    }
 
-    (error) => {
+    if (selectedSession.available_spots <= 0) {
       Swal.fire({
         icon: 'error',
-        title: 'Error en inscripción',
-        text: `Error al inscribirse: ${error.error}`,
+        title: 'Cupos agotados',
+        text: 'Lo sentimos, no hay cupos disponibles para esta clase.',
       });
-      console.error('❌ Error en inscripción:', error);
+      return;
     }
-  );
-}
+    const enrollmentDate = this.getNextDateOfWeekday(this.diaSeleccionado);
+    // 🔹 Datos de inscripción
+    const enrollmentData = {
+      user_id: this.loggedUser?.user_id ?? 0,
+      class_id: selectedSession.class_id,
+      enrollment_date: enrollmentDate,
+    };
+
+    // 🔹 Llamada al servicio para enviar la inscripción al backend
+    this.enrollmentsService.enroll(enrollmentData).subscribe(
+      (response) => {
+        console.log('✅ Inscripción exitosa:', response);
+
+        // 🔹 Reducir cupos disponibles en el frontend sin recargar
+        selectedSession.available_spots--;
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Inscripción exitosa',
+          text: 'Te has inscrito correctamente en la clase.',
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
+      },
+
+      (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error en inscripción',
+          text: `Error al inscribirse: ${error.error}`,
+        });
+        console.error('❌ Error en inscripción:', error);
+      }
+    );
+  }
 
   // Método para cambiar de pestaña
   cambiarTab(tab: string) {

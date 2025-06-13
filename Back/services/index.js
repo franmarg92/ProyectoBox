@@ -8,7 +8,7 @@ const ClassService = require("./ClassService");
 const HoursService = require("./HoursService");
 const DaysService = require("./DaysService");
 const PaidsService = require('./PaidsService')
-const WodService = require('./WodService')
+const WodService = require('./WodService');
 
 
 module.exports = {
