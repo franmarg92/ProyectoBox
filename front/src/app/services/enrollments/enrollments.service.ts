@@ -25,4 +25,15 @@ export class EnrollmentsService {
   registerAtendance(ids: number[]): Observable<any> {
   return this.http.patch(`${this.apiUrl}/attend`, { enrollmentIds: ids });
 }
+
+
+getClassCounter(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/class-counter`);
+  }
+
+getActivityCounter(userId: number, activityId: number): Observable<any> {
+  return this.http.get(`${this.apiUrl}/class-counter/por-usuario-actividad?user_id=${userId}&activity_id=${activityId}`);
 }
+
+}
+

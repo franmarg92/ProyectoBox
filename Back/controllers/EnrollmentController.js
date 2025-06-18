@@ -56,7 +56,27 @@ const registerAttendance = async (req, res) => {
   }
 };
 
+const classCounter = async (req, res) => {
+  try {
+    const data = await classCounterService.contarAsistenciasGenerales();
+    return res.status(200).json(data);
+  } catch (error) {
+    console.error('Error al contar asistencias generales:', error);
+    return res.status(500).json({ error: 'Error interno.' });
+  }
+};
+
+const activityCounter = async (req, res) => {
+  try {
+    const data = await classCounterService.contarAsistenciasPorActividad();
+    return res.status(200).json(data);
+  } catch (error) {
+    console.error('Error al contar por actividad:', error);
+    return res.status(500).json({ error: 'Error interno.' });
+  }
+};
 
 
-    module.exports = {registerAttendance, enrollUser, getEnrollmentsByDate, getAllEnrollments }
+
+    module.exports = {registerAttendance, enrollUser, getEnrollmentsByDate, getAllEnrollments, classCounter, activityCounter }
     

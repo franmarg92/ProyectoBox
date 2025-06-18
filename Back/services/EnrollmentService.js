@@ -168,5 +168,46 @@ const registerAttendance = async (enrollmentIds) => {
   }
 };
 
+const classCounter = async () => {
+  return await EnrollmentsModel.findAll({
+    where: { attended: true },
+    attributes: [
+      'user_id',
+      [fn('COUNT', col('enrollment_id')), 'total_asistencias']
+    ],
+    group: ['user_id', 'User.user_id'],
+    include: [
+      { model: UserModel, attributes: ['name', 'lastName'] }
+    ]
+  });
+};
 
-module.exports = { enrollUser, getAllEnrollments, getEnrollmentsByDate, registerAttendance };
+const activityCounter = async () => {
+  return await EnrollmentsModel.findAll({
+    where: { attended: true },
+    attributes: [
+      'user_id',
+      [fn('COUNT', col('enrollment_id')), 'asistencias']
+    ],
+    group: [
+      'user_id',
+      'User.user_id',
+      'Class.class_id',
+      'Class.Activity.activity_id'
+    ],
+    include: [
+      {
+        model: UserModel,
+        attributes: ['name', 'lastName']
+      },
+      {
+        model: ClassModel,
+        attributes: ['activity_id'],
+        include: [{ model: ActivityModel, attributes: ['name'] }]
+      }
+    ]
+  });
+};
+
+
+module.exports = { enrollUser, getAllEnrollments, getEnrollmentsByDate, registerAttendance, classCounter, activityCounter };

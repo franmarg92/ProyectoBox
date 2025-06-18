@@ -35,7 +35,7 @@ export class LoginService {
 
   login(auth: Auth): Observable<loginResponse> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<loginResponse>(this.apiUrl, auth, { headers }).pipe(
+    return this.http.post<loginResponse>(this.apiUrl, auth, { headers }, ).pipe(
       tap((response) => {
         if (response.success) {
           localStorage.setItem('user', JSON.stringify(response.user));

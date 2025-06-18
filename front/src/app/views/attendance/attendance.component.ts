@@ -18,11 +18,13 @@ export class AttendanceComponent {
   sesiones: any[] = [];
   sesionSeleccionada: any = null;
   alumnos: any[] = [];
+  porActividad: any[] = [];
 
   constructor(private enrollmentsService: EnrollmentsService) {}
 
   ngOnInit(): void {
     this.cargarSesionesDelDia();
+    
   }
 
   cargarSesionesDelDia(): void {
@@ -41,51 +43,53 @@ export class AttendanceComponent {
     if (!this.sesionSeleccionada) return;
 
     const inscriptos = this.sesionSeleccionada.Enrollments ?? [];
-    
 
     this.alumnos = inscriptos.map((e: any) => ({
       enrollment_id: e.enrollment_id,
-      user_id: e.User?.user_id,
       nombre: e.User?.name,
       apellido: e.User?.lastName,
-      present: e.attended === true
+      user_id: e.user_id,
+      present: e.attended === true,
+      clases: 0,
     }));
+
+    
   }
 
   registrarAsistencia(): void {
-  if (!this.sesionSeleccionada) return;
+    if (!this.sesionSeleccionada) return;
 
-  const presentesIds = this.alumnos
-    .filter(a => a.present)
-    .map(a => a.enrollment_id);
+    const presentesIds = this.alumnos
+      .filter((a) => a.present)
+      .map((a) => a.enrollment_id);
 
-  if (presentesIds.length === 0) {
-    Swal.fire({
-      icon: 'info',
-      title: 'Nadie marcado como presente',
-      text: 'Debés marcar al menos un alumno para registrar asistencia.',
-      confirmButtonColor: '#ffc107'
-    });
-    return;
-  }
-
-  this.enrollmentsService.registerAtendance(presentesIds).subscribe({
-    next: () => {
+    if (presentesIds.length === 0) {
       Swal.fire({
-        icon: 'success',
-        title: 'Asistencia registrada',
-        text: `${presentesIds.length} alumno(s) marcados como presentes.`,
-        confirmButtonColor: '#28a745'
+        icon: 'info',
+        title: 'Nadie marcado como presente',
+        text: 'Debés marcar al menos un alumno para registrar asistencia.',
+        confirmButtonColor: '#ffc107',
       });
-    },
-    error: () => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al registrar asistencia',
-        text: 'Ocurrió un problema al guardar. Intentá de nuevo.',
-        confirmButtonColor: '#dc3545'
-      });
+      return;
     }
-  });
-}
+
+    this.enrollmentsService.registerAtendance(presentesIds).subscribe({
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Asistencia registrada',
+          text: `${presentesIds.length} alumno(s) marcados como presentes.`,
+          confirmButtonColor: '#28a745',
+        });
+      },
+      error: () => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al registrar asistencia',
+          text: 'Ocurrió un problema al guardar. Intentá de nuevo.',
+          confirmButtonColor: '#dc3545',
+        });
+      },
+    });
+  }
 }

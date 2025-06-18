@@ -24,7 +24,7 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json());
-app.use(cors(corsConfig));
+  app.use(cors(corsConfig));
 app.use(passport.initialize())
 
 require("./services/ResetService");
