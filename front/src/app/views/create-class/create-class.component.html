@@ -1,0 +1,91 @@
+<div class="create-class-container container bg-light p-4 rounded shadow-sm">
+  <h3 class="mb-4">📚 Crear o Actualizar Clase</h3>
+
+  <!-- Actividad -->
+  <div class="mb-3">
+    <label class="form-label">Actividad:</label>
+    <div class="d-flex gap-2 align-items-center">
+      <select [(ngModel)]="session.class_id" class="form-select w-75">
+        <option *ngFor="let act of actividades" [value]="act.id_activity">
+          {{ act.name }}
+        </option>
+      </select>
+      <button class="btn btn-outline-primary btn-sm" (click)="mostrarFormActividad = !mostrarFormActividad">
+        {{ mostrarFormActividad ? 'Cancelar' : '➕ Nueva Actividad' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Crear nueva actividad -->
+  <div *ngIf="mostrarFormActividad" class="mb-3">
+    <input [(ngModel)]="nuevaActividad.name" class="form-control mb-2" placeholder="Nombre de nueva actividad" />
+    <button class="btn btn-success btn-sm" (click)="crearActividad()">Guardar Actividad</button>
+  </div>
+
+  <!-- Días -->
+<!-- Días -->
+<label class="form-label mt-3">Días de la clase:</label>
+<div class="d-flex flex-wrap gap-3">
+  <div *ngFor="let day of days" class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      [id]="'dia' + day.days_id"
+      [value]="day.days_id"
+      (change)="toggleDay(day.days_id, $event)"
+      [checked]="selectedDays.includes(day.days_id)"
+    />
+    <label class="form-check-label" [for]="'dia' + day.days_id">
+      {{ day.days }}
+    </label>
+  </div>
+</div>
+
+
+<!-- Horarios -->
+<!-- Horarios -->
+<label class="form-label mt-3">Horarios:</label>
+<div class="d-flex flex-wrap gap-3">
+  <div *ngFor="let hour of hours" class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      [id]="'hora' + hour.hours_id"
+      [value]="hour.hours_id"
+      (change)="toggleHour(hour.hours_id, $event)"
+      [checked]="selectedHours.includes(hour.hours_id)"
+    />
+    <label class="form-check-label" [for]="'hora' + hour.hours_id">
+      {{ hour.hour }}
+    </label>
+  </div>
+</div>
+
+
+
+  <!-- Máximo de cupos -->
+  <div class="mb-3">
+    <label class="form-label">Máximo de Cupos:</label>
+    <input type="number" [(ngModel)]="session.max_spots" class="form-control" />
+  </div>
+
+  <!-- Cupos disponibles -->
+  <div class="mb-3">
+    <label class="form-label">Cupos Disponibles:</label>
+    <input type="number" [(ngModel)]="session.available_spots" class="form-control" />
+  </div>
+
+  <!-- Disponible -->
+  <div class="form-check form-switch mb-3">
+    <input class="form-check-input" type="checkbox" [(ngModel)]="session.is_available" id="switchDisponible" />
+    <label class="form-check-label" for="switchDisponible">Clase habilitada</label>
+  </div>
+
+  <!-- Botón -->
+  <div class="text-end">
+    <button class="btn btn-primary" (click)="guardarClase()">💾 Guardar Clase</button>
+  </div>
+
+  <!-- Mensaje -->
+  <p class="text-success mt-3" *ngIf="mensaje">{{ mensaje }}</p>
+</div>

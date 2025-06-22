@@ -1,0 +1,8 @@
+.create-class-container {
+  max-width: 600px;
+  margin: auto;
+}
+
+input[type='number']::-webkit-inner-spin-button {
+  margin-left: 4px;
+}

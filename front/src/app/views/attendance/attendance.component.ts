@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EnrollmentsService } from '../../services/enrollments/enrollments.service';
-
 import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-attendance',
@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
   styleUrl: './attendance.component.css',
 })
 export class AttendanceComponent {
+  
   dateHoy: string = new Date().toISOString().split('T')[0];
   sesiones: any[] = [];
   sesionSeleccionada: any = null;

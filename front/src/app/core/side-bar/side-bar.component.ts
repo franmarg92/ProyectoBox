@@ -19,7 +19,8 @@ export class SideBarComponent {
     { label: 'Cargar wod', path: 'wods', roles: ['admin'] },
     { label: 'Alumnos', path: 'users', roles: ['admin', 'profesor'] },
     { label: 'Cargar Apto Medico', path: 'medicalFit', roles: ['admin'] },
-    { label: 'Cargar Plan de Musculacion', path: 'planTraining', roles: ['admin', 'profesor'] }
+    { label: 'Cargar Plan de Musculacion', path: 'planTraining', roles: ['admin', 'profesor'] },
+    { label: 'Crear o habilitar Clases', path: 'createClass', roles: ['admin']}
   ];
 
   filteredSidebarItems: any[] = [];

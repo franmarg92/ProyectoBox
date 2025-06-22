@@ -15,4 +15,8 @@ export class ActivityService {
   getAllActivities(): Observable<activity[]> {
     return this.http.get<activity[]>(`${this.apiUrl}`);
   }
+
+  createActivity(activityData: activity): Observable<activity>{
+    return this.http.post<activity> (`${this.apiUrl}/create`, activityData)
+  }
 }

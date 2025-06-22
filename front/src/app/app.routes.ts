@@ -11,6 +11,7 @@ import { AttendanceComponent } from './views/attendance/attendance.component';
 import { AllUsersComponent } from './views/all-users/all-users.component';
 import { MedicalFitComponent } from './views/medical-fit/medical-fit.component';
 import { PlanTrainingComponent } from './views/plan-training/plan-training.component';
+import { CreateClassComponent } from './views/create-class/create-class.component';
 
 
 export const routes: Routes = [
@@ -26,7 +27,8 @@ export const routes: Routes = [
             {path: 'activities',  component:UserActivitiesComponent , canActivate: [AuthGuard]},
             {path: 'users', component:AllUsersComponent,canActivate: [AuthGuard], data: { roles: ['admin', 'profesor'] }},
             {path: 'medicalFit', component:MedicalFitComponent, canActivate: [AuthGuard], data: { roles: 'admin' }},
-            {path: 'planTraining', component:PlanTrainingComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'profesor'] }}
+            {path: 'planTraining', component:PlanTrainingComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'profesor'] }},
+            {path: 'createClass', component:CreateClassComponent, canActivate: [AuthGuard], data: {roles: 'admin'}}
         ]
 
     }, 

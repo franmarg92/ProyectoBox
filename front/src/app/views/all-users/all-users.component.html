@@ -43,29 +43,31 @@
           <span *ngIf="!user.expirationDate" class="text-muted">Sin pagos</span>
         </td>
         <td>
-          <button
-            class="btn btn-success"
-            (click)="goToRegisterPayment(user.user_id)"
-          >
-            Registrar Pago
-          </button>
-        </td>
-        <td>
-          <button
-            class="btn btn-warning"
-            (click)="changeUserRole(user.user_id, 'Profesor')"
-          >
-            Convertir en Profesor
-          </button>
-        </td>
-        <td>
-          <button
-            class="btn btn-link p-0 ms-2"
-            (click)="goToUserPlan(user.user_id)"
-            title="Ver plan"
-          >
-            📋
-          </button>
+          <div class="action-group d-flex gap-2 align-items-center">
+            <button
+              class="btn btn-sm btn-outline-success"
+              (click)="goToRegisterPayment(user.user_id)"
+              title="Registrar pago"
+            >
+              💳
+            </button>
+
+            <button
+              class="btn btn-sm btn-outline-primary"
+              (click)="changeUserRole(user.user_id, 'Profesor')"
+              title="Convertir en profesor"
+            >
+              🧑‍🏫
+            </button>
+
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              (click)="goToUserPlan(user.user_id)"
+              title="Ver plan"
+            >
+              📋
+            </button>
+          </div>
         </td>
       </tr>
     </tbody>

@@ -17,3 +17,10 @@ th, td {
 th {
   background-color: #f4f4f4;
 }
+
+.action-group button {
+  padding: 4px 8px;
+  font-size: 0.9rem;
+  line-height: 1;
+  border-radius: 4px;
+}
