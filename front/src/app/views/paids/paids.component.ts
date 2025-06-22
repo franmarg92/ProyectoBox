@@ -53,9 +53,7 @@ export class PaidsComponent implements OnInit {
   }
 
   registerPayment(): void {
-    console.log('📌 selectedUserId:', this.selectedUserId);
-    console.log('💸 amountPaid:', this.amountPaid);
-    console.log('📅 monthsPaid:', this.monthsPaid);
+   
     if (this.selectedUserId && this.amountPaid > 0 && this.monthsPaid > 0) {
       const paymentData = {
         user_id: this.selectedUserId,

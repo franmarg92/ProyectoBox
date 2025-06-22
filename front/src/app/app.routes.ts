@@ -10,6 +10,7 @@ import { WodsComponent } from './views/wods/wods.component';
 import { AttendanceComponent } from './views/attendance/attendance.component';
 import { AllUsersComponent } from './views/all-users/all-users.component';
 import { MedicalFitComponent } from './views/medical-fit/medical-fit.component';
+import { PlanTrainingComponent } from './views/plan-training/plan-training.component';
 
 
 export const routes: Routes = [
@@ -17,14 +18,15 @@ export const routes: Routes = [
     {path: 'login', component:LoginComponent},
     {path: 'register', component:RegisterComponent},
     {path: 'activities',  component:UserActivitiesComponent , canActivate: [AuthGuard]},
-    {path: 'dashboard', component:DasboardComponent, canActivate: [AuthGuard], data: { role: 'admin' },
+    {path: 'dashboard', component:DasboardComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'profesor'] },
         children:[
-            {path: 'paids', component:PaidsComponent, canActivate: [AuthGuard], data: { role: 'admin' }},
-            {path: 'wods', component:WodsComponent, canActivate: [AuthGuard], data: { role: 'admin' }},
-            {path: 'attendance', component:AttendanceComponent, canActivate: [AuthGuard], data: { role: 'admin' }},
+            {path: 'paids', component:PaidsComponent, canActivate: [AuthGuard], data: { roles: 'admin' }},
+            {path: 'wods', component:WodsComponent, canActivate: [AuthGuard], data: { roles: 'admin' }},
+            {path: 'attendance', component:AttendanceComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'profesor'] }},
             {path: 'activities',  component:UserActivitiesComponent , canActivate: [AuthGuard]},
-            {path: 'users', component:AllUsersComponent,canActivate: [AuthGuard], data: { role: 'admin' }},
-            {path: 'medicalFit', component:MedicalFitComponent, canActivate: [AuthGuard], data: { role: 'admin' }}
+            {path: 'users', component:AllUsersComponent,canActivate: [AuthGuard], data: { roles: ['admin', 'profesor'] }},
+            {path: 'medicalFit', component:MedicalFitComponent, canActivate: [AuthGuard], data: { roles: 'admin' }},
+            {path: 'planTraining', component:PlanTrainingComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'profesor'] }}
         ]
 
     }, 

@@ -1,0 +1,24 @@
+<div class="wod-container">
+  <!-- Mostrar nombre del usuario -->
+  <p class="text-muted">Plan para: <strong>{{ selectedUserName }}</strong></p>
+
+  <!-- Vista en tarjeta -->
+  <div *ngIf="!editing && plan.trainingPlan_id !== 0" class="wod-card">
+    <h2>Plan de musculación</h2>
+    <p>{{ plan.description }}</p>
+    <button class="btn btn-edit" (click)="editWod()">Editar</button>
+  </div>
+
+  <!-- Formulario de creación o edición -->
+  <form *ngIf="editing || plan.trainingPlan_id === 0" (ngSubmit)="saveWod()">
+    <label for="description">Plan de musculación</label>
+    <textarea id="description" [(ngModel)]="plan.description" name="description" required></textarea>
+
+    <button type="submit" class="btn">
+      {{ plan.trainingPlan_id === 0 ? 'Crear plan' : 'Actualizar' }}
+    </button>
+    <button type="button" class="btn btn-cancel" (click)="cancelEdit()">Cancelar</button>
+  </form>
+
+  <p class="text-success" *ngIf="mensaje">{{ mensaje }}</p>
+</div>

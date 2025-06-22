@@ -16,6 +16,8 @@ import { wods } from '../../models/wods';
 import { WodsService } from '../../services/wods/wods.service';
 import { PaidsService } from '../../services/paids/paids.service';
 import Swal from 'sweetalert2';
+import { PlanTrainingService } from '../../services/planTraining/plan-training.service';
+import { planTraining } from '../../models/planTraining';
 
 @Component({
   selector: 'app-user-activities',
@@ -25,6 +27,7 @@ import Swal from 'sweetalert2';
   styleUrl: './user-activities.component.css',
 })
 export class UserActivitiesComponent {
+  plan: planTraining = { trainingPlan_id: 0, description: '', user_id: 0 };
   enrollments: enrollUser = { user_id: 0, class_id: 0 };
   selectedTab: string = 'Inscripciones';
   loggedUser: loggedUser | null = null;
@@ -35,6 +38,7 @@ export class UserActivitiesComponent {
   wod: wods[] = [];
   isPaid: boolean = false;
   expirationDate: Date | null = null;
+  mensaje: string = '';
 
   ngOnInit() {
     this.getLoggedUser();
@@ -44,6 +48,14 @@ export class UserActivitiesComponent {
     this.loadDays();
     this.loadSessions();
     this.loadUserPaymentStatus();
+
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const parsedUser = JSON.parse(userData);
+      if (parsedUser?.user_id) {
+        this.loadPlanSoloLectura(parsedUser.user_id);
+      }
+    }
   }
 
   constructor(
@@ -53,7 +65,8 @@ export class UserActivitiesComponent {
     private daysService: DaysService,
     private sessionService: SessionsService,
     private wodsService: WodsService,
-    private paidsService: PaidsService
+    private paidsService: PaidsService,
+    private planService: PlanTrainingService
   ) {}
 
   loadUserPaymentStatus(): void {
@@ -208,5 +221,21 @@ export class UserActivitiesComponent {
   // Método para cambiar de pestaña
   cambiarTab(tab: string) {
     this.selectedTab = tab;
+  }
+
+  loadPlanSoloLectura(user_id: number): void {
+    this.planService.getPlanByUserId(user_id).subscribe({
+      next: (plan) => {
+        if (plan) {
+          this.plan = plan;
+        } else {
+          this.mensaje = 'No tenés un plan asignado aún';
+        }
+      },
+      error: (err) => {
+        this.mensaje = 'Ocurrió un error al cargar tu plan';
+        console.error(err);
+      },
+    });
   }
 }

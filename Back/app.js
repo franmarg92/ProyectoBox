@@ -13,7 +13,8 @@ const {
   enrollRouter,
   hoursRouter,
   daysRouter,
-  wodRouter
+  wodRouter,
+  trainingPlanRouter
 
 } = require("./routes");
 const corsConfig = require("./config/cors");
@@ -24,7 +25,9 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json());
-  app.use(cors(corsConfig));
+
+app.use(cors(corsConfig));
+
 app.use(passport.initialize())
 
 require("./services/ResetService");
@@ -40,9 +43,11 @@ app.use("/api/days", daysRouter);
 app.use("/api/class", classRouter);
 app.use("/api/payment", paidsRouter);
 app.use("/api/wods", wodRouter);
+app.use("/api/trainingPlan", trainingPlanRouter)
 
 
 app.listen(PORT, async () => {
   await dbConfig.initDB();
+  await dbConfig.sequelize.sync({ alter: true });
   console.log(`Servidor corriendo en puerto ${PORT}`);
 });

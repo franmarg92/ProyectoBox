@@ -4,7 +4,7 @@ const { userController } = require("../controllers");
 const {authMiddleware}  = require('../middlewares')
 
 router.get("/", userController.getAllUser);
-router.put(
+router.patch(
   "/update-role",
   authMiddleware.userIsAuth,
   authMiddleware.userIsAdmin,

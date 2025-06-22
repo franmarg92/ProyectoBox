@@ -19,12 +19,14 @@ export class AttendanceComponent {
   sesionSeleccionada: any = null;
   alumnos: any[] = [];
   porActividad: any[] = [];
+  
 
   constructor(private enrollmentsService: EnrollmentsService) {}
 
   ngOnInit(): void {
     this.cargarSesionesDelDia();
-    
+     
+
   }
 
   cargarSesionesDelDia(): void {

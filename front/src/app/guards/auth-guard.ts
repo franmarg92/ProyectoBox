@@ -14,14 +14,16 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
-    const userRole = this.loginService.getUserRole();
-    const requiredRole = route.data['role']; 
+    const userRole = this.loginService.getUserRole() ?? '';
 
-    if (!requiredRole || requiredRole === userRole) {
-      return true;
-    }
+    const allowedRoles: string[] = route.data['roles'];
+    
 
-    console.warn("❌ Acceso denegado: Se requiere rol", requiredRole);
+  if (!allowedRoles || allowedRoles.includes(userRole)) {
+    return true;
+  }
+
+    console.warn("❌ Acceso denegado: Se requiere rol", allowedRoles);
     this.router.navigate(['']);
     return false;
   }

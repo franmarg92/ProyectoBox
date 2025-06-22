@@ -16,9 +16,10 @@ export class SideBarComponent {
     { label: 'Cargar Pagos', path: 'paids', roles: ['admin'] },
     { label: 'Cargar Asistencia', path: 'attendance', roles: ['admin', 'profesor'] },
     { label: 'Inscribirse a Clases', path: 'activities', roles: ['admin', 'profesor'] },
-    { label: 'Cargar wod', path: 'wods', roles: ['admin', 'profesor'] },
+    { label: 'Cargar wod', path: 'wods', roles: ['admin'] },
     { label: 'Alumnos', path: 'users', roles: ['admin', 'profesor'] },
-    { label: 'Cargar Apto Medico', path: 'medicalFit', roles: ['admin', 'profesor'] }
+    { label: 'Cargar Apto Medico', path: 'medicalFit', roles: ['admin'] },
+    { label: 'Cargar Plan de Musculacion', path: 'planTraining', roles: ['admin', 'profesor'] }
   ];
 
   filteredSidebarItems: any[] = [];

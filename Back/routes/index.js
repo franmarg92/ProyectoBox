@@ -9,6 +9,7 @@ const daysRouter = require("./DaysRoutes");
 const classRouter = require("./ClassRoutes");
 const paidsRouter = require("./PaidsRoutes");
 const wodRouter = require('./WodRoutes');
+const trainingPlanRouter = require('./TrainingPlanRoutes')
 
 
 module.exports = {
@@ -22,6 +23,7 @@ module.exports = {
   registerRouter,
   activityRouter,
   enrollRouter,
-  wodRouter
+  wodRouter,
+  trainingPlanRouter
   
 };

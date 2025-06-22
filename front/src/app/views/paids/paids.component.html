@@ -6,7 +6,7 @@
     <div class="card-body">
       <form (ngSubmit)="registerPayment()">
         <div class="row">
-            <!-- Usuario -->
+          <!-- Usuario -->
           <div class="col-md-6 mb-3">
             <label for="user" class="form-label fw-bold">Usuario</label>
             <select
@@ -21,7 +21,6 @@
             </select>
           </div>
 
-
           <!-- Monto del pago -->
           <div class="col-md-6 mb-3">
             <label for="amount" class="form-label fw-bold">Monto Pagado</label>
@@ -33,6 +32,10 @@
               name="amount"
               required
             />
+            <p class="text-muted mt-2">
+              Valor:
+              {{ amountPaid | currency : "ARS" : "symbol" : "1.2-2" : "es-AR" }}
+            </p>
           </div>
         </div>
 

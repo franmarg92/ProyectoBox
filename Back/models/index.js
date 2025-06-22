@@ -9,6 +9,7 @@ const TeacherClassModel = require('./TeacherClassModel');
 const PaidModel = require('./PaidsModel');
 const MedicalFitModel = require('./MedicalFitModel');
 const WodModel = require('./WodModel');
+const TrainingPlanModel = require('./TrainingPlanModel');
 
 
 // ==========================
@@ -57,6 +58,13 @@ SessionModel.hasMany(TeacherClassModel, { foreignKey: 'class_id' });
 TeacherClassModel.belongsTo(SessionModel, { foreignKey: 'class_id' });
 
 
+// ==========================
+// 📌 Relaciones de Alumnos con Planes
+// ==========================
+
+//UserModel.hasOne(TrainingPlanModel, { foreignKey: 'user_id'});
+//TrainingPlanModel.belongsTo(UserModel, { foreignKey: 'user_id' });
+
 
 module.exports = {
   UserModel, 
@@ -69,5 +77,6 @@ module.exports = {
   TeacherClassModel, 
   PaidModel, 
   MedicalFitModel,
-  WodModel
+  WodModel,
+  TrainingPlanModel
 };

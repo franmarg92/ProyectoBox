@@ -9,7 +9,7 @@ const hoursController = require("./HoursController");
 const daysController = require("./DaysController");
 const paidsController = require("./PaidsController");
 const wodController = require('./WodController');
-
+const trainingPlanController = require('./TrainingPlanController')
 
 module.exports = {
   paidsController,
@@ -22,5 +22,6 @@ module.exports = {
   userController,
   loginController,
   registerController,
-  wodController
+  wodController,
+  trainingPlanController
 };

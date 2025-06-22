@@ -51,10 +51,22 @@
           </button>
         </td>
         <td>
-  <button class="btn btn-warning" (click)="changeUserRole(user.user_id, 'Profesor')">
-    Convertir en Profesor
-  </button>
-</td>
+          <button
+            class="btn btn-warning"
+            (click)="changeUserRole(user.user_id, 'Profesor')"
+          >
+            Convertir en Profesor
+          </button>
+        </td>
+        <td>
+          <button
+            class="btn btn-link p-0 ms-2"
+            (click)="goToUserPlan(user.user_id)"
+            title="Ver plan"
+          >
+            📋
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>

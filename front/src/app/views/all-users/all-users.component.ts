@@ -130,4 +130,9 @@ changeUserRole(userId: number, newRole: string): void {
   });
 }
 
+goToUserPlan(userId: number) {
+  localStorage.setItem('selectedUserId', userId.toString()); 
+  this.router.navigate(['/dashboard/planTraining']);
+}
+
 }

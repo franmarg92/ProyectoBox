@@ -35,9 +35,9 @@
     <li class="nav-item">
       <a
         class="nav-link"
-        [ngClass]="{ active: selectedTab === 'clases' }"
-        (click)="selectedTab = 'clases'"
-        >Clases</a
+        [ngClass]="{ active: selectedTab === 'plan' }"
+        (click)="selectedTab = 'plan'"
+        >Plan Musculacion</a
       >
     </li>
   </ul>
@@ -88,6 +88,14 @@
     <h3>Workout of the Day</h3>
     <p *ngIf="wod.length > 0" class="wod-description">
       {{ wod[0].description }}
+    </p>
+  </div>
+
+
+  <div *ngIf="selectedTab === 'plan'" class="mt-3">
+    <h3>Plan de musculacion</h3>
+    <p *ngIf="plan" class="wod-description">
+      {{ plan.description }}
     </p>
   </div>
 </div>

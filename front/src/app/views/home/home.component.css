@@ -35,3 +35,9 @@
     padding: 40px 20px;
     background: #ddd;
 }
+
+
+.img-sm {
+  max-height: 400px; /* o el tamaño que prefieras */
+  width: auto;
+}
